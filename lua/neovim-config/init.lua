@@ -1,0 +1,5 @@
+require("neovim-config.options")
+require('neovim-config.lazy')
+require('neovim-config.autocommands')
+require('neovim-config.keymap')
+require('neovim-config.filetypes')
