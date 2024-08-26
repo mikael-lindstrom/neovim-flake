@@ -1,13 +1,13 @@
 return {
-    "ellisonleao/gruvbox.nvim",
+    'ellisonleao/gruvbox.nvim',
     lazy = false,
     priority = 1000,
     config = function()
-        require("gruvbox").setup({
+        require('gruvbox').setup({
             overrides = {
-                Directory = { link = "GruvboxBlue" },
+                Directory = { link = 'GruvboxBlue' },
             },
         })
-        vim.cmd("colorscheme gruvbox")
+        vim.cmd('colorscheme gruvbox')
     end,
 }

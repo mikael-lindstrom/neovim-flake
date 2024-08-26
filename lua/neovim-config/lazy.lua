@@ -1,4 +1,4 @@
-require("lazy").setup({
+require('lazy').setup({
     -- Needed since lazy doesn't actually install plugins
     performance = {
         reset_packpath = false,
@@ -7,16 +7,16 @@ require("lazy").setup({
         },
     },
     spec = {
-        import = "neovim-config/plugins"
+        import = 'neovim-config/plugins',
     },
     -- Lazy create this directory even though we never need it
-    root = "/tmp/lazy-tmp",
+    root = '/tmp/lazy-tmp',
     -- This needs to be set since it otherwise looks in the home directory
-    lockfile = "/tmp/lazy-lock.json",
+    lockfile = '/tmp/lazy-lock.json',
     dev = {
         path = vim.g.lazyPluginPath,
         -- All plugins are installed through nix
-        patterns = { "" },
+        patterns = { '' },
     },
     install = {
         -- Safeguard in case we forget to install a plugin with Nix
