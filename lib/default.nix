@@ -121,9 +121,6 @@ rec {
         customRC = mkNeovimInitConfig { inherit system packages; };
         packages = packages;
       };
-      extraMakeWrapperArgs = ''--suffix PATH : "${lib.makeBinPath lsps}"'';
-      withNodeJs = true;
-      withPython3 = true;
-      withRuby = true;
+      extraMakeWrapperArgs = ''--prefix PATH : "${lib.makeBinPath lsps}"'';
     };
 }
