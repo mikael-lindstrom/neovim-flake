@@ -46,22 +46,12 @@ rec {
       pkgs.nixpkgs-fmt
     ];
 
-  # Link all treesitter parsers in one directory to reduce length of runtimepath of neovim
-  mkTreesitterGrammars = { system }:
-    let
-      pkgs = inputs.nixpkgs.legacyPackages.${system};
-    in
-    pkgs.symlinkJoin {
-      name = "nvim-treesitter";
-      paths = pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
-    };
-
   # All plugins to install
   mkNeovimPlugins = { system }:
     let
       pkgs = inputs.nixpkgs.legacyPackages.${system};
       neovimConfig = mkConfigPlugin { inherit system; };
-      treesitterGrammars = mkTreesitterGrammars { inherit system; };
+      treesitter = inputs.treesitter.legacyPackages.${system};
     in
     {
       config = {
@@ -91,7 +81,7 @@ rec {
           pkgs.vimPlugins.copilot-cmp
           pkgs.vimPlugins.copilot-lua
           pkgs.vimPlugins.none-ls-nvim
-          treesitterGrammars
+          treesitter.vimPlugins.nvim-treesitter.withAllGrammars
         ];
       };
     };

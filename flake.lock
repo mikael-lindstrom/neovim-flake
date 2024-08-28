@@ -49,7 +49,24 @@
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "treesitter": "treesitter"
+      }
+    },
+    "treesitter": {
+      "locked": {
+        "lastModified": 1719764577,
+        "narHash": "sha256-304HNA/XvmyfD7JZfpqF4dEBnbUYci/gMZvDThXmYkE=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "19581e2ce8bc43f898ef724f8072ebf62bebb325",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "19581e2ce8bc43f898ef724f8072ebf62bebb325",
+        "type": "github"
       }
     }
   },
