@@ -51,50 +51,40 @@ rec {
     let
       pkgs = inputs.nixpkgs.legacyPackages.${system};
       neovimConfig = mkConfigPlugin { inherit system; };
-      treesitter = inputs.treesitter.legacyPackages.${system};
     in
     {
       config = {
         start =
           [
-            pkgs.vimPlugins.lazy-nvim
+            pkgs.vimPlugins.plenary-nvim
+            pkgs.vimPlugins.harpoon2
+            pkgs.vimPlugins.telescope-nvim
+            pkgs.vimPlugins.vim-tmux-navigator
+            pkgs.vimPlugins.gruvbox-nvim
+            pkgs.vimPlugins.heirline-nvim
+            pkgs.vimPlugins.nvim-web-devicons
+            pkgs.vimPlugins.nui-nvim
+            pkgs.vimPlugins.neo-tree-nvim
+            pkgs.vimPlugins.indent-blankline-nvim
+            pkgs.vimPlugins.nvim-lspconfig
+            pkgs.vimPlugins.nvim-cmp
+            pkgs.vimPlugins.cmp-nvim-lsp
+            pkgs.vimPlugins.cmp-buffer
+            pkgs.vimPlugins.luasnip
+            pkgs.vimPlugins.cmp_luasnip
+            pkgs.vimPlugins.copilot-cmp
+            pkgs.vimPlugins.copilot-lua
+            pkgs.vimPlugins.none-ls-nvim
+            pkgs.vimPlugins.nvim-treesitter.withAllGrammars
             neovimConfig
           ];
-        # Everything under opt is loaded by lazy-nvim
-        opt = [
-          pkgs.vimPlugins.harpoon2
-          pkgs.vimPlugins.plenary-nvim
-          pkgs.vimPlugins.telescope-nvim
-          pkgs.vimPlugins.vim-tmux-navigator
-          pkgs.vimPlugins.gruvbox-nvim
-          pkgs.vimPlugins.heirline-nvim
-          pkgs.vimPlugins.nvim-web-devicons
-          pkgs.vimPlugins.nui-nvim
-          pkgs.vimPlugins.neo-tree-nvim
-          pkgs.vimPlugins.indent-blankline-nvim
-          pkgs.vimPlugins.nvim-lspconfig
-          pkgs.vimPlugins.nvim-cmp
-          pkgs.vimPlugins.cmp-nvim-lsp
-          pkgs.vimPlugins.cmp-buffer
-          pkgs.vimPlugins.luasnip
-          pkgs.vimPlugins.cmp_luasnip
-          pkgs.vimPlugins.copilot-cmp
-          pkgs.vimPlugins.copilot-lua
-          pkgs.vimPlugins.none-ls-nvim
-          treesitter.vimPlugins.nvim-treesitter.withAllGrammars
-        ];
       };
     };
 
   # Init config which loads the config plugin
-  mkNeovimInitConfig = { system, packages }:
-    let
-      pkgs = inputs.nixpkgs.legacyPackages.${system};
-      lazyPluginPath = "${pkgs.vimUtils.packDir packages}/pack/config/opt";
-    in
+  mkNeovimInitConfig =
     ''
       lua << EOF
-        vim.g.lazyPluginPath = "${lazyPluginPath}"
         require 'neovim-config.init'
       EOF
     '';
@@ -108,7 +98,7 @@ rec {
     in
     neovim.override {
       configure = {
-        customRC = mkNeovimInitConfig { inherit system packages; };
+        customRC = mkNeovimInitConfig;
         packages = packages;
       };
       extraMakeWrapperArgs = ''--prefix PATH : "${lib.makeBinPath lsps}"'';
