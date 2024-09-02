@@ -61,7 +61,6 @@ rec {
             pkgs.vimPlugins.telescope-nvim
             pkgs.vimPlugins.vim-tmux-navigator
             pkgs.vimPlugins.gruvbox-nvim
-            pkgs.vimPlugins.heirline-nvim
             pkgs.vimPlugins.nvim-web-devicons
             pkgs.vimPlugins.nui-nvim
             pkgs.vimPlugins.neo-tree-nvim
@@ -75,6 +74,7 @@ rec {
             pkgs.vimPlugins.copilot-cmp
             pkgs.vimPlugins.copilot-lua
             pkgs.vimPlugins.none-ls-nvim
+            pkgs.vimPlugins.mini-nvim
             pkgs.vimPlugins.nvim-treesitter.withAllGrammars
             neovimConfig
           ];

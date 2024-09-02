@@ -1,5 +1,5 @@
 require('neovim-config.plugins.colorscheme-gruvbox')
-require('neovim-config.plugins.heirline')
+require('neovim-config.plugins.mini-statusline')
 require('neovim-config.plugins.indent-blankline')
 require('neovim-config.plugins.vim-tmux-navigator')
 require('neovim-config.plugins.telescope')
