@@ -16,6 +16,7 @@
             type = "app";
           };
         };
+        formatter = pkgs.nixpkgs-fmt;
         packages.default = self.lib.mkNeovim { inherit system; };
       };
       flake = {
