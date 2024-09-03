@@ -1,7 +1,8 @@
 local lsp_config = require('lspconfig')
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
+    if client.name == 'tsserver' then client.server_capabilities.documentFormattingProvider = false end
     local nmap = function(keys, func, desc)
         if desc then desc = 'LSP: ' .. desc end
         vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
@@ -54,6 +55,11 @@ lsp_config.gopls.setup({
 })
 
 lsp_config.templ.setup({
+    capabilities = capabilities,
+    on_attach = on_attach,
+})
+
+lsp_config.tsserver.setup({
     capabilities = capabilities,
     on_attach = on_attach,
 })

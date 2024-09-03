@@ -1,6 +1,22 @@
 -- Autoformat on save
 vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
-    pattern = { '*.tf', '*.tfvars', '*.jsonnet', '*.libsonnet', '*.lua', '*.rs', '*.go', '*.sh', '*.nix' },
+    pattern = {
+        '*.tf',
+        '*.tfvars',
+        '*.jsonnet',
+        '*.libsonnet',
+        '*.lua',
+        '*.rs',
+        '*.go',
+        '*.sh',
+        '*.nix',
+        '*.ts',
+        '*.tsx',
+        '*.json',
+        '*.yaml',
+        '*.yml',
+        '*.md',
+    },
     command = 'lua vim.lsp.buf.format()',
 })
 
