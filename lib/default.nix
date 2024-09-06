@@ -103,5 +103,6 @@ rec {
         packages = packages;
       };
       extraMakeWrapperArgs = ''--prefix PATH : "${lib.makeBinPath lsps}"'';
+      withNodeJs = true;
     };
 }
