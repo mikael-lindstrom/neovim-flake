@@ -70,6 +70,11 @@ lsp_config.html.setup({
     filetypes = { 'html', 'templ' },
 })
 
+lsp_config.jsonls.setup({
+    capabilities = capabilities,
+    on_attach = on_attach,
+})
+
 lsp_config.htmx.setup({
     capabilities = capabilities,
     on_attach = on_attach,
