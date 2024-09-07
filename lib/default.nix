@@ -45,6 +45,7 @@ rec {
 
       # formatting
       pkgs.nixpkgs-fmt
+      pkgs.nodePackages.prettier
     ];
 
   # All plugins to install
