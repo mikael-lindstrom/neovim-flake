@@ -59,7 +59,7 @@ lsp_config.templ.setup({
     on_attach = on_attach,
 })
 
-lsp_config.tsserver.setup({
+lsp_config.ts_ls.setup({
     capabilities = capabilities,
     on_attach = on_attach,
 })
