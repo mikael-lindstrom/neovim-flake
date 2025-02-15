@@ -67,8 +67,6 @@ rec {
             pkgs.vimPlugins.vim-tmux-navigator
             pkgs.vimPlugins.gruvbox-nvim
             pkgs.vimPlugins.nvim-web-devicons
-            pkgs.vimPlugins.nui-nvim
-            pkgs.vimPlugins.neo-tree-nvim
             pkgs.vimPlugins.indent-blankline-nvim
             pkgs.vimPlugins.nvim-lspconfig
             pkgs.vimPlugins.nvim-cmp
