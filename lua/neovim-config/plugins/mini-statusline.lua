@@ -25,8 +25,6 @@ local get_mode_highlight_separator = setmetatable({
 })
 
 local active = function()
-    if vim.bo.filetype == 'neo-tree' then return '%#MiniStatuslineInactive#%f%m%r%=' end
-
     local mode, mode_hl = statusline.section_mode({ trunc_width = 120 })
     local git = statusline.section_git({ trunc_width = 40 })
     local diff = statusline.section_diff({ trunc_width = 75 })
@@ -75,18 +73,18 @@ local highlights = {
     devinfo = string.format('#%06x', vim.api.nvim_get_hl(0, { name = 'MiniStatuslineDevinfo', link = false }).fg),
 }
 
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeNormalSeparatorLeft', { fg = highlights.normal, bg = highlights.filename })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeInsertSeparatorLeft', { fg = highlights.insert, bg = highlights.filename })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeVisualSeparatorLeft', { fg = highlights.visual, bg = highlights.filename })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeReplaceSeparatorLeft', { fg = highlights.replace, bg = highlights.filename })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeCommandSeparatorLeft', { fg = highlights.command, bg = highlights.filename })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeOtherSeparatorLeft', { fg = highlights.other, bg = highlights.filename })
+vim.api.nvim_set_hl(0, 'MiniStatuslineModeNormalSeparatorLeft', { fg = highlights.filename, bg = highlights.normal })
+vim.api.nvim_set_hl(0, 'MiniStatuslineModeInsertSeparatorLeft', { fg = highlights.filename, bg = highlights.insert })
+vim.api.nvim_set_hl(0, 'MiniStatuslineModeVisualSeparatorLeft', { fg = highlights.filename, bg = highlights.visual })
+vim.api.nvim_set_hl(0, 'MiniStatuslineModeReplaceSeparatorLeft', { fg = highlights.filename, bg = highlights.replace })
+vim.api.nvim_set_hl(0, 'MiniStatuslineModeCommandSeparatorLeft', { fg = highlights.filename, bg = highlights.command })
+vim.api.nvim_set_hl(0, 'MiniStatuslineModeOtherSeparatorLeft', { fg = highlights.filename, bg = highlights.other })
 
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeNormalSeparatorRight', { fg = highlights.normal, bg = highlights.fileinfo })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeInsertSeparatorRight', { fg = highlights.insert, bg = highlights.fileinfo })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeVisualSeparatorRight', { fg = highlights.visual, bg = highlights.fileinfo })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeReplaceSeparatorRight', { fg = highlights.replace, bg = highlights.fileinfo })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeCommandSeparatorRight', { fg = highlights.command, bg = highlights.fileinfo })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeOtherSeparatorRight', { fg = highlights.other, bg = highlights.fileinfo })
+vim.api.nvim_set_hl(0, 'MiniStatuslineModeNormalSeparatorRight', { fg = highlights.fileinfo, bg = highlights.normal })
+vim.api.nvim_set_hl(0, 'MiniStatuslineModeInsertSeparatorRight', { fg = highlights.fileinfo, bg = highlights.insert })
+vim.api.nvim_set_hl(0, 'MiniStatuslineModeVisualSeparatorRight', { fg = highlights.fileinfo, bg = highlights.visual })
+vim.api.nvim_set_hl(0, 'MiniStatuslineModeReplaceSeparatorRight', { fg = highlights.fileinfo, bg = highlights.replace })
+vim.api.nvim_set_hl(0, 'MiniStatuslineModeCommandSeparatorRight', { fg = highlights.fileinfo, bg = highlights.command })
+vim.api.nvim_set_hl(0, 'MiniStatuslineModeOtherSeparatorRight', { fg = highlights.fileinfo, bg = highlights.other })
 
-vim.api.nvim_set_hl(0, 'MiniStatuslineFilenameDevinfoSeparator', { fg = highlights.devinfo, bg = highlights.filename })
+vim.api.nvim_set_hl(0, 'MiniStatuslineFilenameDevinfoSeparator', { fg = highlights.filename, bg = highlights.fileinfo })
