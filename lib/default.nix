@@ -76,6 +76,7 @@ rec {
             pkgs.vimPlugins.cmp_luasnip
             pkgs.vimPlugins.copilot-cmp
             pkgs.vimPlugins.copilot-lua
+            pkgs.vimPlugins.codecompanion-nvim
             pkgs.vimPlugins.none-ls-nvim
             pkgs.vimPlugins.mini-nvim
             pkgs.vimPlugins.nvim-treesitter.withAllGrammars
