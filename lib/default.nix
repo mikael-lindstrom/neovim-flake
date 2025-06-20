@@ -8,7 +8,7 @@ rec {
     in
     vimUtils.buildVimPlugin {
       name = "neovim-config";
-      src = ../.;
+      src = builtins.path { path = ../.; name = "source"; };
 
       postInstall = ''
         rm -rf $out/.gitignore
