@@ -10,27 +10,31 @@ require('avante').setup({
         support_paste_from_clipboard = false,
         minimize_diff = true,
     },
-    copilot = {
-        endpoint = 'https://api.githubcopilot.com/',
-        model = 'claude-3.5-sonnet',
-        proxy = nil,
-        allow_insecure = false,
-        timeout = 30000,
-        temperature = 0.1,
-        max_tokens = 8192,
-    },
-    windows = {
-        width = 50, -- default % based on available width in vertical layout
-        sidebar_header = {
-            align = 'center',
-            rounded = false,
+    providers = {
+        copilot = {
+            endpoint = 'https://api.githubcopilot.com/',
+            model = 'claude-3.5-sonnet',
+            proxy = nil,
+            allow_insecure = false,
+            timeout = 30000,
+            extra_request_body = {
+                temperature = 0.1,
+                max_tokens = 8192,
+            },
         },
-        edit = {
-            start_insert = false,
-        },
-        ask = {
-            border = 'none',
-            start_insert = false,
+        windows = {
+            width = 50, -- default % based on available width in vertical layout
+            sidebar_header = {
+                align = 'center',
+                rounded = false,
+            },
+            edit = {
+                start_insert = false,
+            },
+            ask = {
+                border = 'none',
+                start_insert = false,
+            },
         },
     },
     mappings = {
