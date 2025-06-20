@@ -22,19 +22,19 @@ require('avante').setup({
                 max_tokens = 8192,
             },
         },
-        windows = {
-            width = 50, -- default % based on available width in vertical layout
-            sidebar_header = {
-                align = 'center',
-                rounded = false,
-            },
-            edit = {
-                start_insert = false,
-            },
-            ask = {
-                border = 'none',
-                start_insert = false,
-            },
+    },
+    windows = {
+        width = 50, -- default % based on available width in vertical layout
+        sidebar_header = {
+            align = 'center',
+            rounded = false,
+        },
+        edit = {
+            start_insert = false,
+        },
+        ask = {
+            border = 'none',
+            start_insert = false,
         },
     },
     mappings = {
