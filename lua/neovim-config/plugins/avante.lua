@@ -7,6 +7,7 @@ require('avante').setup({
         auto_set_highlight_group = false,
         auto_set_keymaps = true,
         auto_apply_diff_after_generation = false,
+        enable_token_counting = false,
         support_paste_from_clipboard = false,
         minimize_diff = true,
     },
@@ -30,11 +31,11 @@ require('avante').setup({
             rounded = false,
         },
         edit = {
-            start_insert = false,
+            start_insert = true,
         },
         ask = {
             border = 'none',
-            start_insert = false,
+            start_insert = true,
         },
     },
     mappings = {
