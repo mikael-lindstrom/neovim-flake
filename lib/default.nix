@@ -78,7 +78,6 @@ rec {
             pkgs.vimPlugins.mini-nvim
             pkgs.vimPlugins.copilot-cmp
             pkgs.vimPlugins.copilot-lua
-            pkgs.vimPlugins.avante-nvim
             pkgs.vimPlugins.nvim-treesitter.withAllGrammars
             neovimConfig
           ];
