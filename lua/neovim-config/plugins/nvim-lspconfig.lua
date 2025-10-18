@@ -1,4 +1,3 @@
-local lsp_config = require('lspconfig')
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 local on_attach = function(client, bufnr)
@@ -23,13 +22,12 @@ local on_attach = function(client, bufnr)
     nmap('<leader>ld', function() vim.diagnostic.open_float({ border = 'rounded' }) end, 'Hover diagnostics')
 end
 
-lsp_config.util.default_config = vim.tbl_extend('force', lsp_config.util.default_config, {
+vim.lsp.config('*', {
     capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities),
+    on_attach = on_attach,
 })
 
-lsp_config.terraformls.setup({
-    capabilities = capabilities,
-    on_attach = on_attach,
+vim.lsp.config('terraformls', {
     init_options = {
         experimentalFeatures = {
             validateOnSave = false,
@@ -38,52 +36,19 @@ lsp_config.terraformls.setup({
     },
 })
 
-lsp_config.jsonnet_ls.setup({
-    capabilities = capabilities,
-    on_attach = on_attach,
-})
-
-lsp_config.rust_analyzer.setup({
-    capabilities = capabilities,
-    on_attach = on_attach,
+vim.lsp.config('rust_analyzer', {
     cmd = { 'rustup', 'run', 'nightly', 'rust-analyzer' },
 })
 
-lsp_config.gopls.setup({
-    capabilities = capabilities,
-    on_attach = on_attach,
-})
-
-lsp_config.templ.setup({
-    capabilities = capabilities,
-    on_attach = on_attach,
-})
-
-lsp_config.ts_ls.setup({
-    capabilities = capabilities,
-    on_attach = on_attach,
-})
-
-lsp_config.html.setup({
-    capabilities = capabilities,
-    on_attach = on_attach,
+vim.lsp.config('html', {
     filetypes = { 'html', 'templ' },
 })
 
-lsp_config.jsonls.setup({
-    capabilities = capabilities,
-    on_attach = on_attach,
-})
-
-lsp_config.htmx.setup({
-    capabilities = capabilities,
-    on_attach = on_attach,
+vim.lsp.config('htmx', {
     filetypes = { 'html', 'templ' },
 })
 
-lsp_config.nil_ls.setup({
-    capabilities = capabilities,
-    on_attach = on_attach,
+vim.lsp.config('nil_ls', {
     settings = {
         ['nil'] = {
             formatting = {
@@ -93,24 +58,18 @@ lsp_config.nil_ls.setup({
     },
 })
 
-lsp_config.tailwindcss.setup({
-    capabilities = capabilities,
-    on_attach = on_attach,
+vim.lsp.config('tailwindcss', {
     filetypes = { 'templ', 'astro', 'javascript', 'typescript', 'react' },
     init_options = { userLanguages = { templ = 'html' } },
 })
 
-lsp_config.lua_ls.setup({
-    capabilities = capabilities,
-    on_attach = on_attach,
+vim.lsp.config('lua_ls', {
     settings = {
         Lua = {
             diagnostics = {
-                -- Get the language server to recognize the `vim` global
                 globals = { 'vim' },
             },
             workspace = {
-                -- Make the server aware of Neovim runtime files
                 library = {
                     [vim.fn.expand('$VIMRUNTIME/lua')] = true,
                     [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
@@ -119,3 +78,16 @@ lsp_config.lua_ls.setup({
         },
     },
 })
+
+vim.lsp.enable('gopls')
+vim.lsp.enable('html')
+vim.lsp.enable('htmx')
+vim.lsp.enable('jsonls')
+vim.lsp.enable('jsonnet_ls')
+vim.lsp.enable('lua_ls')
+vim.lsp.enable('nil_ls')
+vim.lsp.enable('rust_analyzer')
+vim.lsp.enable('tailwindcss')
+vim.lsp.enable('templ')
+vim.lsp.enable('terraformls')
+vim.lsp.enable('ts_ls')
