@@ -75,6 +75,25 @@ vim.lsp.config('lua_ls', {
     },
 })
 
+local function jsonnet_path(root_dir)
+    local paths = {
+        root_dir .. '/lib',
+        root_dir .. '/vendor',
+    }
+    return table.concat(paths, ':')
+end
+
+vim.lsp.config('jsonnet_ls', {
+    cmd = function(dispatchers, config)
+        local jpath = jsonnet_path(config.root_dir)
+        return vim.lsp.rpc.start(
+            { 'jsonnet-language-server' },
+            dispatchers,
+            { cwd = config.root_dir, env = { JSONNET_PATH = jpath } }
+        )
+    end,
+})
+
 vim.lsp.enable('gopls')
 vim.lsp.enable('html')
 vim.lsp.enable('htmx')
