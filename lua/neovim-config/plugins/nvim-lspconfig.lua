@@ -36,10 +36,6 @@ vim.lsp.config('terraformls', {
     },
 })
 
-vim.lsp.config('rust_analyzer', {
-    cmd = { 'rustup', 'run', 'nightly', 'rust-analyzer' },
-})
-
 vim.lsp.config('html', {
     filetypes = { 'html', 'templ' },
 })
