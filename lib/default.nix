@@ -49,6 +49,7 @@ rec {
       # formatting
       pkgs.nixpkgs-fmt
       pkgs.nodePackages.prettier
+      pkgs.grafana-alloy
     ];
 
   # All plugins to install
@@ -78,7 +79,18 @@ rec {
             pkgs.vimPlugins.mini-nvim
             pkgs.vimPlugins.copilot-cmp
             pkgs.vimPlugins.copilot-lua
-            pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+            (pkgs.vimPlugins.nvim-treesitter.withPlugins (_: pkgs.vimPlugins.nvim-treesitter.allGrammars ++ [
+              (pkgs.tree-sitter.buildGrammar {
+                language = "river";
+                version = "eafcdc5";
+                src = pkgs.fetchFromGitHub {
+                  owner = "grafana";
+                  repo = "tree-sitter-river";
+                  rev = "eafcdc5147f985fea120feb670f1df7babb2f79e";
+                  sha256 = "sha256-fhuIO++hLr5DqqwgFXgg8QGmcheTpYaYLMo7117rjyk=";
+                };
+              })
+            ]))
             neovimConfig
           ];
       };
