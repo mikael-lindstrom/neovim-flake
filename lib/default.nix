@@ -41,6 +41,7 @@ rec {
       pkgs.htmx-lsp
       pkgs.tailwindcss-language-server
       pkgs.vscode-langservers-extracted # html, markdown, eslint, json, css
+      pkgs.ols
 
       # none-ls
       pkgs.shfmt
