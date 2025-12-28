@@ -27,3 +27,10 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
     pattern = { '*.templ' },
     command = 'lua vim.lsp.buf.format({ filter = function(client) return client.name == "templ" end })',
 })
+
+-- Auto reload files changed outside of Neovim
+vim.api.nvim_create_autocmd({ 'FocusGained', 'TermLeave', 'TermClose' }, {
+    callback = function()
+        if vim.bo.buftype == '' then vim.cmd('checktime') end
+    end,
+})
