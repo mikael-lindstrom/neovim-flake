@@ -1,5 +1,3 @@
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-
 local on_attach = function(client, bufnr)
     if client.name == 'ts_ls' then client.server_capabilities.documentFormattingProvider = false end
     local nmap = function(keys, func, desc)
@@ -23,7 +21,7 @@ local on_attach = function(client, bufnr)
 end
 
 vim.lsp.config('*', {
-    capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities),
+    capabilities = require('cmp_nvim_lsp').default_capabilities(),
     on_attach = on_attach,
 })
 
