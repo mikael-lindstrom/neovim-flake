@@ -19,7 +19,7 @@ rec {
         rm -rf $out/lib
       '';
 
-      # Do try to autoload lua modules since it will fail
+      # Do not try to autoload lua modules since it will fail
       doCheck = false;
     };
 
