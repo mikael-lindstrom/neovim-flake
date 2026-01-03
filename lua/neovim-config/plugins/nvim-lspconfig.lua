@@ -1,7 +1,7 @@
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 local on_attach = function(client, bufnr)
-    if client.name == 'tsserver' then client.server_capabilities.documentFormattingProvider = false end
+    if client.name == 'ts_ls' then client.server_capabilities.documentFormattingProvider = false end
     local nmap = function(keys, func, desc)
         if desc then desc = 'LSP: ' .. desc end
         vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
