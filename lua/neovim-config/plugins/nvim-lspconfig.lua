@@ -55,7 +55,14 @@ vim.lsp.config('nil_ls', {
 })
 
 vim.lsp.config('tailwindcss', {
-    filetypes = { 'templ', 'astro', 'javascript', 'typescript', 'react' },
+    filetypes = {
+        'templ',
+        'astro',
+        'javascript',
+        'javascriptreact',
+        'typescript',
+        'typescriptreact',
+    },
     init_options = { userLanguages = { templ = 'html' } },
 })
 
