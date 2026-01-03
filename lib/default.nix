@@ -57,43 +57,48 @@ rec {
   mkNeovimPlugins = { system }:
     let
       pkgs = inputs.nixpkgs.legacyPackages.${system};
+    in
+    [
+      pkgs.vimPlugins.plenary-nvim
+      pkgs.vimPlugins.harpoon2
+      pkgs.vimPlugins.telescope-nvim
+      pkgs.vimPlugins.vim-tmux-navigator
+      pkgs.vimPlugins.gruvbox-nvim
+      pkgs.vimPlugins.nvim-web-devicons
+      pkgs.vimPlugins.indent-blankline-nvim
+      pkgs.vimPlugins.nvim-lspconfig
+      pkgs.vimPlugins.nvim-cmp
+      pkgs.vimPlugins.cmp-nvim-lsp
+      pkgs.vimPlugins.cmp-buffer
+      pkgs.vimPlugins.luasnip
+      pkgs.vimPlugins.cmp_luasnip
+      pkgs.vimPlugins.none-ls-nvim
+      pkgs.vimPlugins.mini-nvim
+      pkgs.vimPlugins.copilot-cmp
+      pkgs.vimPlugins.copilot-lua
+      (pkgs.vimPlugins.nvim-treesitter.withPlugins (_: pkgs.vimPlugins.nvim-treesitter.allGrammars ++ [
+        (pkgs.tree-sitter.buildGrammar {
+          language = "river";
+          version = "eafcdc5";
+          src = pkgs.fetchFromGitHub {
+            owner = "grafana";
+            repo = "tree-sitter-river";
+            rev = "eafcdc5147f985fea120feb670f1df7babb2f79e";
+            sha256 = "sha256-fhuIO++hLr5DqqwgFXgg8QGmcheTpYaYLMo7117rjyk=";
+          };
+        })
+      ]))
+    ];
+
+  # All plugins to install with config plugin
+  mkNeovimPluginsWithConfig = { system }:
+    let
       neovimConfig = mkConfigPlugin { inherit system; };
+      basePlugins = mkNeovimPlugins { inherit system; };
     in
     {
       config = {
-        start =
-          [
-            pkgs.vimPlugins.plenary-nvim
-            pkgs.vimPlugins.harpoon2
-            pkgs.vimPlugins.telescope-nvim
-            pkgs.vimPlugins.vim-tmux-navigator
-            pkgs.vimPlugins.gruvbox-nvim
-            pkgs.vimPlugins.nvim-web-devicons
-            pkgs.vimPlugins.indent-blankline-nvim
-            pkgs.vimPlugins.nvim-lspconfig
-            pkgs.vimPlugins.nvim-cmp
-            pkgs.vimPlugins.cmp-nvim-lsp
-            pkgs.vimPlugins.cmp-buffer
-            pkgs.vimPlugins.luasnip
-            pkgs.vimPlugins.cmp_luasnip
-            pkgs.vimPlugins.none-ls-nvim
-            pkgs.vimPlugins.mini-nvim
-            pkgs.vimPlugins.copilot-cmp
-            pkgs.vimPlugins.copilot-lua
-            (pkgs.vimPlugins.nvim-treesitter.withPlugins (_: pkgs.vimPlugins.nvim-treesitter.allGrammars ++ [
-              (pkgs.tree-sitter.buildGrammar {
-                language = "river";
-                version = "eafcdc5";
-                src = pkgs.fetchFromGitHub {
-                  owner = "grafana";
-                  repo = "tree-sitter-river";
-                  rev = "eafcdc5147f985fea120feb670f1df7babb2f79e";
-                  sha256 = "sha256-fhuIO++hLr5DqqwgFXgg8QGmcheTpYaYLMo7117rjyk=";
-                };
-              })
-            ]))
-            neovimConfig
-          ];
+        start = basePlugins ++ [ neovimConfig ];
       };
     };
 
@@ -109,13 +114,43 @@ rec {
     let
       inherit (pkgs) lib neovim;
       pkgs = inputs.nixpkgs.legacyPackages.${system};
-      packages = mkNeovimPlugins { inherit system; };
+      packages = mkNeovimPluginsWithConfig { inherit system; };
       lsps = mkNeovimLSPs { inherit system; };
     in
     neovim.override {
       configure = {
         customRC = mkNeovimInitConfig;
         packages = packages;
+      };
+      extraMakeWrapperArgs = ''--prefix PATH : "${lib.makeBinPath lsps}"'';
+      withNodeJs = true;
+    };
+
+  mkNeovimDevShell = { system }:
+    let
+      inherit (pkgs) lib neovim;
+      pkgs = inputs.nixpkgs.legacyPackages.${system};
+      basePlugins = mkNeovimPlugins { inherit system; };
+      lsps = mkNeovimLSPs { inherit system; };
+    in
+    neovim.override {
+      configure = {
+        customRC = ''
+          lua << EOF
+            local lua_path = vim.fn.getcwd() .. '/lua'
+            local patterns = {
+              lua_path .. '/?.lua',
+              lua_path .. '/?/init.lua',
+            }
+            package.path = table.concat(patterns, ';') .. ';' .. package.path
+            require('neovim-config.init')
+          EOF
+        '';
+        packages = {
+          config = {
+            start = basePlugins;
+          };
+        };
       };
       extraMakeWrapperArgs = ''--prefix PATH : "${lib.makeBinPath lsps}"'';
       withNodeJs = true;

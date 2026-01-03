@@ -18,6 +18,14 @@
         };
         formatter = pkgs.nixpkgs-fmt;
         packages.default = self.lib.mkNeovim { inherit system; };
+        devShells.default = pkgs.mkShell {
+          packages = [
+            (self.lib.mkNeovimDevShell { inherit system; })
+          ];
+          shellHook = ''
+            echo "Dev shell ready. Run 'nvim' from this directory to use live config from ./lua"
+          '';
+        };
       };
       flake = {
         lib = import ./lib { inherit inputs; };
