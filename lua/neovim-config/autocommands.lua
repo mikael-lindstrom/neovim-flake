@@ -17,7 +17,6 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
         '*.yml',
         '*.md',
         '*.alloy',
-        '*.odin',
     },
     command = 'lua vim.lsp.buf.format()',
 })

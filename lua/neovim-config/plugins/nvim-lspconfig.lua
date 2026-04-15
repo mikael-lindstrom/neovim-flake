@@ -20,8 +20,11 @@ local on_attach = function(client, bufnr)
     nmap('<leader>ld', function() vim.diagnostic.open_float({ border = 'rounded' }) end, 'Hover diagnostics')
 end
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
 vim.lsp.config('*', {
-    capabilities = require('cmp_nvim_lsp').default_capabilities(),
+    capabilities = capabilities,
     on_attach = on_attach,
 })
 
@@ -106,7 +109,6 @@ vim.lsp.enable('jsonls')
 vim.lsp.enable('jsonnet_ls')
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('nil_ls')
-vim.lsp.enable('ols')
 vim.lsp.enable('rust_analyzer')
 vim.lsp.enable('tailwindcss')
 vim.lsp.enable('templ')

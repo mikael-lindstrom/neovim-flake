@@ -48,7 +48,7 @@ rec {
 
       # formatting
       pkgs.nixpkgs-fmt
-      pkgs.nodePackages.prettier
+      pkgs.prettier
       pkgs.grafana-alloy
     ];
 
@@ -56,6 +56,16 @@ rec {
   mkNeovimPlugins = { system }:
     let
       pkgs = inputs.nixpkgs.legacyPackages.${system};
+      riverGrammar = pkgs.tree-sitter.buildGrammar {
+        language = "river";
+        version = "eafcdc5";
+        src = pkgs.fetchFromGitHub {
+          owner = "grafana";
+          repo = "tree-sitter-river";
+          rev = "eafcdc5147f985fea120feb670f1df7babb2f79e";
+          sha256 = "sha256-fhuIO++hLr5DqqwgFXgg8QGmcheTpYaYLMo7117rjyk=";
+        };
+      };
     in
     [
       pkgs.vimPlugins.plenary-nvim
@@ -66,26 +76,10 @@ rec {
       pkgs.vimPlugins.nvim-web-devicons
       pkgs.vimPlugins.indent-blankline-nvim
       pkgs.vimPlugins.nvim-lspconfig
-      pkgs.vimPlugins.nvim-cmp
-      pkgs.vimPlugins.cmp-nvim-lsp
-      pkgs.vimPlugins.cmp-buffer
-      pkgs.vimPlugins.luasnip
-      pkgs.vimPlugins.cmp_luasnip
       pkgs.vimPlugins.none-ls-nvim
       pkgs.vimPlugins.mini-nvim
-      pkgs.vimPlugins.copilot-cmp
-      pkgs.vimPlugins.copilot-lua
       (pkgs.vimPlugins.nvim-treesitter.withPlugins (_: pkgs.vimPlugins.nvim-treesitter.allGrammars ++ [
-        (pkgs.tree-sitter.buildGrammar {
-          language = "river";
-          version = "eafcdc5";
-          src = pkgs.fetchFromGitHub {
-            owner = "grafana";
-            repo = "tree-sitter-river";
-            rev = "eafcdc5147f985fea120feb670f1df7babb2f79e";
-            sha256 = "sha256-fhuIO++hLr5DqqwgFXgg8QGmcheTpYaYLMo7117rjyk=";
-          };
-        })
+        riverGrammar
       ]))
     ];
 
