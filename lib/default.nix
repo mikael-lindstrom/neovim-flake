@@ -4,7 +4,8 @@ rec {
   # Create a neovim configuration as a plugin
   mkConfigPlugin = { system }:
     let
-      vimUtils = inputs.nixpkgs.legacyPackages.${system}.vimUtils;
+      pkgs = import inputs.nixpkgs { inherit system; };
+      vimUtils = pkgs.vimUtils;
     in
     vimUtils.buildVimPlugin {
       name = "neovim-config";
@@ -26,7 +27,7 @@ rec {
   # LSPs and formatters to install
   mkNeovimLSPs = { system }:
     let
-      pkgs = inputs.nixpkgs.legacyPackages.${system};
+      pkgs = import inputs.nixpkgs { inherit system; };
     in
     [
       # LSPs
@@ -55,7 +56,7 @@ rec {
   # All plugins to install
   mkNeovimPlugins = { system }:
     let
-      pkgs = inputs.nixpkgs.legacyPackages.${system};
+      pkgs = import inputs.nixpkgs { inherit system; };
       riverGrammar = pkgs.tree-sitter.buildGrammar {
         language = "river";
         version = "eafcdc5";
@@ -105,8 +106,8 @@ rec {
 
   mkNeovim = { system }:
     let
+      pkgs = import inputs.nixpkgs { inherit system; };
       inherit (pkgs) lib neovim;
-      pkgs = inputs.nixpkgs.legacyPackages.${system};
       packages = mkNeovimPluginsWithConfig { inherit system; };
       lsps = mkNeovimLSPs { inherit system; };
     in
@@ -121,8 +122,8 @@ rec {
 
   mkNeovimDevShell = { system }:
     let
+      pkgs = import inputs.nixpkgs { inherit system; };
       inherit (pkgs) lib neovim;
-      pkgs = inputs.nixpkgs.legacyPackages.${system};
       basePlugins = mkNeovimPlugins { inherit system; };
       lsps = mkNeovimLSPs { inherit system; };
     in

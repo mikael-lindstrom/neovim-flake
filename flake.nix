@@ -12,7 +12,7 @@
       perSystem = { config, self', inputs', pkgs, system, ... }: {
         apps = {
           nvim = {
-            program = "${config.packages.neovim}/bin/nvim";
+            program = "${config.packages.default}/bin/nvim";
             type = "app";
           };
         };
