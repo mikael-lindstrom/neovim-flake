@@ -35,13 +35,14 @@ rec {
       pkgs.gopls
       pkgs.jsonnet-language-server
       pkgs.lua-language-server
+      pkgs.marksman
       pkgs.rust-analyzer
       pkgs.terraform-ls
       pkgs.templ
       pkgs.typescript-language-server
       pkgs.htmx-lsp
       pkgs.tailwindcss-language-server
-      pkgs.vscode-langservers-extracted # html, markdown, eslint, json, css
+      pkgs.vscode-langservers-extracted # html, eslint, json, css
 
       # none-ls
       pkgs.shfmt
