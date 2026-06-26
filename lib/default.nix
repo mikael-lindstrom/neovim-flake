@@ -35,7 +35,6 @@ rec {
       pkgs.gopls
       pkgs.jsonnet-language-server
       pkgs.lua-language-server
-      pkgs.marksman
       pkgs.rust-analyzer
       pkgs.terraform-ls
       pkgs.templ
