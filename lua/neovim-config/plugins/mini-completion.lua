@@ -6,6 +6,9 @@ completion.setup({
         info = 100,
         signature = 50,
     },
+    lsp_completion = {
+        auto_setup = false,
+    },
     mappings = {
         force_twostep = '<C-Space>',
         force_fallback = '<A-Space>',

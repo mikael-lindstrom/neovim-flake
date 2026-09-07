@@ -1,5 +1,8 @@
 local on_attach = function(client, bufnr)
     if client.name == 'ts_ls' then client.server_capabilities.documentFormattingProvider = false end
+    if client:supports_method(vim.lsp.protocol.Methods.textDocument_completion, bufnr) then
+        vim.bo[bufnr].completefunc = 'v:lua.MiniCompletion.completefunc_lsp'
+    end
     local nmap = function(keys, func, desc)
         if desc then desc = 'LSP: ' .. desc end
         vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
@@ -20,8 +23,11 @@ local on_attach = function(client, bufnr)
     nmap('<leader>ld', function() vim.diagnostic.open_float({ border = 'rounded' }) end, 'Hover diagnostics')
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+local capabilities = vim.tbl_deep_extend(
+    'force',
+    vim.lsp.protocol.make_client_capabilities(),
+    require('mini.completion').get_lsp_capabilities()
+)
 
 vim.lsp.config('*', {
     capabilities = capabilities,
