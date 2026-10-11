@@ -98,6 +98,7 @@ local function jsonnet_path(root_dir)
 end
 
 vim.lsp.config('jsonnet_ls', {
+    filetypes = { 'jsonnet' },
     cmd = function(dispatchers, config)
         local jpath = jsonnet_path(config.root_dir)
         return vim.lsp.rpc.start(

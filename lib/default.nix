@@ -24,7 +24,7 @@ rec {
       doCheck = false;
     };
 
-  # LSPs and formatters to install
+  # LSPs, formatters, and runtime tools to install
   mkNeovimLSPs = { system }:
     let
       pkgs = import inputs.nixpkgs { inherit system; };
@@ -51,6 +51,10 @@ rec {
       pkgs.nixpkgs-fmt
       pkgs.prettier
       pkgs.grafana-alloy
+
+      # Telescope
+      pkgs.fd
+      pkgs.ripgrep
     ];
 
   # All plugins to install
