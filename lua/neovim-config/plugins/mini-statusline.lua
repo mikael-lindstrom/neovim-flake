@@ -60,31 +60,27 @@ statusline.setup({
     set_vim_settings = true,
 })
 
--- Add highlights after setup() when Mini has added it's own highlights
-local highlights = {
-    normal = string.format('#%06x', vim.api.nvim_get_hl(0, { name = 'MiniStatuslineModeNormal', link = false }).bg),
-    insert = string.format('#%06x', vim.api.nvim_get_hl(0, { name = 'MiniStatuslineModeInsert', link = false }).bg),
-    visual = string.format('#%06x', vim.api.nvim_get_hl(0, { name = 'MiniStatuslineModeVisual', link = false }).bg),
-    replace = string.format('#%06x', vim.api.nvim_get_hl(0, { name = 'MiniStatuslineModeReplace', link = false }).bg),
-    command = string.format('#%06x', vim.api.nvim_get_hl(0, { name = 'MiniStatuslineModeCommand', link = false }).bg),
-    other = string.format('#%06x', vim.api.nvim_get_hl(0, { name = 'MiniStatuslineModeOther', link = false }).bg),
-    filename = string.format('#%06x', vim.api.nvim_get_hl(0, { name = 'MiniStatuslineFilename', link = false }).bg),
-    fileinfo = string.format('#%06x', vim.api.nvim_get_hl(0, { name = 'MiniStatuslineFileinfo', link = false }).bg),
-    devinfo = string.format('#%06x', vim.api.nvim_get_hl(0, { name = 'MiniStatuslineDevinfo', link = false }).bg),
-}
+-- Run after Mini's own setup/ColorScheme hook, including when reloading a theme.
+local update_separator_highlights = function()
+    local normal = vim.api.nvim_get_hl(0, { name = 'Normal', link = false })
+    local background = function(name)
+        local highlight = vim.api.nvim_get_hl(0, { name = name, link = false })
+        if highlight.reverse then return highlight.fg or normal.fg end
+        return highlight.bg or normal.bg
+    end
+    local filename = background('MiniStatuslineFilename')
+    local fileinfo = background('MiniStatuslineFileinfo')
+    local devinfo = background('MiniStatuslineDevinfo')
+    for mode, separator in pairs(get_mode_highlight_separator) do
+        local color = background(mode)
+        vim.api.nvim_set_hl(0, separator .. 'Left', { bg = filename, fg = color })
+        vim.api.nvim_set_hl(0, separator .. 'Right', { bg = fileinfo, fg = color })
+    end
+    vim.api.nvim_set_hl(0, 'MiniStatuslineFilenameDevinfoSeparator', { bg = filename, fg = devinfo })
+end
 
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeNormalSeparatorLeft', { bg = highlights.filename, fg = highlights.normal })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeInsertSeparatorLeft', { bg = highlights.filename, fg = highlights.insert })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeVisualSeparatorLeft', { bg = highlights.filename, fg = highlights.visual })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeReplaceSeparatorLeft', { bg = highlights.filename, fg = highlights.replace })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeCommandSeparatorLeft', { bg = highlights.filename, fg = highlights.command })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeOtherSeparatorLeft', { bg = highlights.filename, fg = highlights.other })
-
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeNormalSeparatorRight', { bg = highlights.fileinfo, fg = highlights.normal })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeInsertSeparatorRight', { bg = highlights.fileinfo, fg = highlights.insert })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeVisualSeparatorRight', { bg = highlights.fileinfo, fg = highlights.visual })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeReplaceSeparatorRight', { bg = highlights.fileinfo, fg = highlights.replace })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeCommandSeparatorRight', { bg = highlights.fileinfo, fg = highlights.command })
-vim.api.nvim_set_hl(0, 'MiniStatuslineModeOtherSeparatorRight', { bg = highlights.fileinfo, fg = highlights.other })
-
-vim.api.nvim_set_hl(0, 'MiniStatuslineFilenameDevinfoSeparator', { bg = highlights.filename, fg = highlights.fileinfo })
+update_separator_highlights()
+vim.api.nvim_create_autocmd('ColorScheme', {
+    group = vim.api.nvim_create_augroup('MiniStatuslineSeparators', { clear = true }),
+    callback = update_separator_highlights,
+})

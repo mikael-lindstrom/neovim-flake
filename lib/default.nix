@@ -77,7 +77,6 @@ rec {
       pkgs.vimPlugins.harpoon2
       pkgs.vimPlugins.telescope-nvim
       pkgs.vimPlugins.vim-tmux-navigator
-      pkgs.vimPlugins.gruvbox-nvim
       pkgs.vimPlugins.nvim-web-devicons
       pkgs.vimPlugins.indent-blankline-nvim
       pkgs.vimPlugins.nvim-lspconfig
