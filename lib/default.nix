@@ -61,6 +61,16 @@ rec {
   mkNeovimPlugins = { system }:
     let
       pkgs = import inputs.nixpkgs { inherit system; };
+      oscColors = pkgs.vimUtils.buildVimPlugin {
+        pname = "osc-colors.nvim";
+        version = "2026-09-17";
+        src = pkgs.fetchFromGitHub {
+          owner = "GooseRooster";
+          repo = "osc-colors.nvim";
+          rev = "622b45f1bf9d9265ee7858048a78b0682c796cfd";
+          hash = "sha256-6WPBlj3Np0aIXRaRtyFljbN6pA02mSkAkc1+PPFauaw=";
+        };
+      };
       riverGrammar = pkgs.tree-sitter.buildGrammar {
         language = "river";
         version = "eafcdc5";
@@ -73,6 +83,7 @@ rec {
       };
     in
     [
+      oscColors
       pkgs.vimPlugins.plenary-nvim
       pkgs.vimPlugins.harpoon2
       pkgs.vimPlugins.telescope-nvim

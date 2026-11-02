@@ -1,4 +1,4 @@
-require('neovim-config.plugins.colorscheme-roasted-umber')
+require('neovim-config.plugins.colorscheme-osc-colors')
 require('neovim-config.plugins.mini-statusline')
 require('neovim-config.plugins.mini-completion')
 require('neovim-config.plugins.mini-files')
